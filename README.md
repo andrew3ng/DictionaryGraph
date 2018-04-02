@@ -11,6 +11,8 @@ Dictionary using the Graph ADT
 * Complete Word Processor Class
   * Complete getWordStream Method (Mike)
   * Complete isAdjacent Method (Collin)
+* Create a thorough GraphProcessorTest Class
+  * Generate & implement ideas for testing (Everyone)
 * Debug each class thoroughly (Everyone)
 
 **Please edit the readme once a task has been complete!**
