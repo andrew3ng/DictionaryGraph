@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 ////////////////////////////////////////////////////////////////////////////
 // Semester:         CS400 Spring 2018
 // PROJECT:          cs400_p3_201801
@@ -30,15 +32,42 @@
 public class Graph<E> implements GraphADT<E> {
     
     /**
+     * Graph constructor
+     */
+    public Graph() {
+        vertices = new ArrayList<E>();
+        edges = new ArrayList<ArrayList<Boolean>>();
+    }
+    
+    /**
      * Instance variables and constructors
      */
+    private ArrayList<ArrayList<Boolean>> edges; // 2D array for edges
+    private ArrayList<E> vertices; // list of valid vertices
     
     /**
      * {@inheritDoc}
      */
     @Override
     public E addVertex(E vertex) {
-        return null;
+        if (vertex == null) // If input is null
+            return null;
+        int i = vertices.indexOf(vertex);
+        if (i == -1) { // If DNE
+            vertices.add(vertex); // Append to vertices (will always be last index)
+            edges.add(new ArrayList<Boolean>()); // New Row
+            for (ArrayList<Boolean> startPoint : edges) {
+                // Edges will always be a square matrix
+                // With length and width equal to vertice's length
+                // Each start and end point will also be in order based on inputed vertices
+                // So no sorting around
+                while (startPoint.size() != vertices.size()) {
+                    startPoint.add(false); // Appending Column
+                }
+            }
+            return vertex;
+        }
+        return null; // Otherwise return null
     }
     
     /**
@@ -46,7 +75,18 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public E removeVertex(E vertex) {
-        return null;
+        if (vertex == null) // If input is null
+            return null;
+        int i = vertices.indexOf(vertex);
+        if (i == -1) // If DNE
+            return null;
+        // Otherwise
+        edges.remove(i); // Removes vertex row
+        // i always correlates with its corresponding vertex
+        // because order is not edited
+        for (ArrayList<Boolean> edge : edges)
+            edge.remove(i); // Removes vertex column
+        return vertices.remove(i); // Removes vertex from array of vertices
     }
     
     /**
@@ -54,7 +94,16 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean addEdge(E vertex1, E vertex2) {
-        return true;
+        // Get start and end points
+        int startPoint = vertices.indexOf(vertex1);
+        int endPoint = vertices.indexOf(vertex2);
+        // Check conditions
+        if (startPoint == -1 || endPoint == -1 || startPoint == endPoint)
+            return false; // If met, return false
+        // Return true while setting the points to true
+        edges.get(startPoint).set(endPoint, true);
+        // Twice cause undirected
+        return edges.get(endPoint).set(startPoint, true);
     }
     
     /**
@@ -62,7 +111,16 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean removeEdge(E vertex1, E vertex2) {
-        return false;
+        // Get start and end points
+        int startPoint = vertices.indexOf(vertex1);
+        int endPoint = vertices.indexOf(vertex2);
+        // Check conditions
+        if (startPoint == -1 || endPoint == -1 || startPoint == endPoint)
+            return false; // If met, return false;
+        // Return true while setting the point to false
+        edges.get(endPoint).set(startPoint, false);
+        // Twice cause undirected
+        return !edges.get(startPoint).set(endPoint, false);
     }
     
     /**
@@ -70,7 +128,14 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public boolean isAdjacent(E vertex1, E vertex2) {
-        return true;
+        // Get start and end points
+        int startPoint = vertices.indexOf(vertex1);
+        int endPoint = vertices.indexOf(vertex2);
+        // Check conditions
+        if (startPoint == -1 || endPoint == -1 || startPoint == endPoint)
+            return false; // If met, return false
+        // Return edge truth value (only need one)
+        return edges.get(startPoint).get(endPoint);
     }
     
     /**
@@ -78,7 +143,17 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public Iterable<E> getNeighbors(E vertex) {
-        return null;
+        ArrayList<E> neighbors = new ArrayList<E>();
+        int i = vertices.indexOf(vertex);
+        if (i == -1) // If DNE
+            return null;
+        for (int j = 0; j < vertices.size(); j++) {
+            if (i == j) // If same vertex
+                continue;
+            if (edges.get(i).get(j)) // If they are adjacent
+                neighbors.add(vertices.get(j));
+        }
+        return neighbors; // Return array
     }
     
     /**
@@ -86,7 +161,7 @@ public class Graph<E> implements GraphADT<E> {
      */
     @Override
     public Iterable<E> getAllVertices() {
-        return null;
+        return vertices;
     }
     
 }
