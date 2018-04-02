@@ -62,6 +62,8 @@ public class Graph<E> implements GraphADT<E> {
                 // Each start and end point will also be in order based on inputed vertices
                 // So no sorting around
                 while (startPoint.size() != vertices.size()) {
+                    // Will always only add one
+                    // Unless the new point without any connections
                     startPoint.add(false); // Appending Column
                 }
             }
@@ -103,7 +105,8 @@ public class Graph<E> implements GraphADT<E> {
         // Return true while setting the points to true
         edges.get(startPoint).set(endPoint, true);
         // Twice cause undirected
-        return edges.get(endPoint).set(startPoint, true);
+        edges.get(endPoint).set(startPoint, true);
+        return true;
     }
     
     /**
@@ -120,7 +123,8 @@ public class Graph<E> implements GraphADT<E> {
         // Return true while setting the point to false
         edges.get(endPoint).set(startPoint, false);
         // Twice cause undirected
-        return !edges.get(startPoint).set(endPoint, false);
+        edges.get(startPoint).set(endPoint, false);
+        return true;
     }
     
     /**
@@ -147,6 +151,7 @@ public class Graph<E> implements GraphADT<E> {
         int i = vertices.indexOf(vertex);
         if (i == -1) // If DNE
             return null;
+        // Loop through all vertices to see if they are neighbors
         for (int j = 0; j < vertices.size(); j++) {
             if (i == j) // If same vertex
                 continue;
