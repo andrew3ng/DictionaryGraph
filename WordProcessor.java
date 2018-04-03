@@ -89,6 +89,7 @@ public class WordProcessor {
     }
     
     /**
+     * @Author Collin Dedrick
      * Adjacency between word1 and word2 is defined by:
      * if the difference between word1 and word2 is of
      * 1 char replacement
@@ -108,7 +109,43 @@ public class WordProcessor {
      * @return true if word1 and word2 are adjacent else false
      */
     public static boolean isAdjacent(String word1, String word2) {
-        return false;
+        if(Math.abs(word1.length()-word2.length()) > 1) {
+            return false; //requires at least two add/del
+        }
+        if(word1.length()==word2.length()) {
+            //words are equal length, only adjacent through sub
+            int count = 0;
+            for(int i=0;i<word1.length();i++) {
+                if(word1.charAt(i)!=word2.charAt(i)) {count++;}
+            }
+            return (count==1); //exactly one sub is required, dups return false
+        }
+        //Words are one character different in size, require an add/del
+        String longWord, shortWord;
+        if(word1.length() > word2.length()) {
+            longWord = word1;
+            shortWord = word2;
+        } else {
+            longWord = word2;
+            shortWord = word1;
+        }
+        if(longWord.substring(0,longWord.length()-1).equals(shortWord)) {
+            return true; //Prevents IndexOutOfBoundsException in the for loop
+        }
+        boolean flag = false;
+        int j = 0;
+        for(int i=0;i<shortWord.length();i++) {
+            if(longWord.charAt(j)!=shortWord.charAt(i)) {
+                if(flag) {
+                    return false;
+                } else {
+                    flag = true;
+                    i--;
+                }
+            }
+            j++;
+        }
+        return true;
     }
     
 }
