@@ -10,7 +10,7 @@ Dictionary using the Graph ADT
   * Complete Distance/Path Methods (Joyce)
 * Complete Word Processor Class
   * Complete getWordStream Method (Mike)
-  * Complete isAdjacent Method (Collin)
+  * ~~Complete isAdjacent Method (Collin)~~
 * Create a thorough GraphProcessorTest Class
   * Generate & implement ideas for testing (Everyone)
 * Debug each class thoroughly (Everyone)
