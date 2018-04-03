@@ -1,6 +1,7 @@
 # DictionaryGraph
 Dictionary using the Graph ADT
 [Canvas Details](https://canvas.wisc.edu/courses/91820/pages/p4-dictionary-graph)
+[Markdown Cheatsheet for Reference](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 # Todo:
 * ~~Complete Graph Class~~ (Andrew)
