@@ -129,6 +129,8 @@ public class WordProcessor {
             longWord = word2;
             shortWord = word1;
         }
+        
+        // If statement isn't necessary, but looks good otherwise
         if(longWord.substring(0,longWord.length()-1).equals(shortWord)) {
             return true; //Prevents IndexOutOfBoundsException in the for loop
         }
